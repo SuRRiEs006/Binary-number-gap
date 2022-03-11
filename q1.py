@@ -9,7 +9,7 @@ import copy
 ##### CODE ######
 
 class BinaryNumber:
-    def __init__(self,):
+    def __init__(self,nVal):
         self.nVal = None
         self.highestPower = None
         self.countdownArray = []
@@ -51,18 +51,14 @@ class BinaryNumber:
                     self.countdownArray.append("".join(binaryOutput[::-1]))
             #print(localDenNum)
             #print("".join(binaryOutput))
-            print(', '.join(self.countdownArray))
+            return((' ,'.join(self.countdownArray))[::-1])
 
 
 
+    def main(self):
+        denNum = copy.deepcopy(self.nVal)
+        print(self.generate_binary_numbers(20))
 
 
 
-    # def binCountDown(self):
-    #     for i in range(0,self.nVal):
-    #         print(i)
-
-
-
-
-BinaryNumber().generate_binary_numbers(20)
+BinaryNumber(20).main()
