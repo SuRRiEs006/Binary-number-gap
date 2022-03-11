@@ -9,8 +9,8 @@ import copy
 ##### CODE ######
 
 class BinaryNumber:
-    def __init__(self,nVal):
-        self.nVal = nVal
+    def __init__(self,):
+        self.nVal = None
         self.highestPower = None
         self.countdownArray = []
 
@@ -45,10 +45,13 @@ class BinaryNumber:
             if (localDenNum%2 == 1) & ("".join(binaryOutput) != "1"):
                 self.countdownArray.append("".join(binaryOutput)[:-1] )
             else:
-                self.countdownArray.append("".join(binaryOutput[::-1]))
+                if ("".join(binaryOutput[::-1]))[0] == "0":
+                    self.countdownArray.append(("".join(binaryOutput[::-1]))[1:])
+                else:
+                    self.countdownArray.append("".join(binaryOutput[::-1]))
             #print(localDenNum)
             #print("".join(binaryOutput))
-        print(self.countdownArray)
+            print(', '.join(self.countdownArray))
 
 
 
@@ -62,6 +65,4 @@ class BinaryNumber:
 
 
 
-seven =BinaryNumber(257)
-
-seven.generate_binary_numbers(20)
+BinaryNumber().generate_binary_numbers(20)
