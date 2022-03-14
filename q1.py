@@ -6,58 +6,47 @@
 #####IMPORTS#####
 import copy
 
+
 ##### CODE ######
 
 class BinaryNumber:
     def __init__(self,nVal):
-        self.nVal = None
-        self.highestPower = None
+        self.nVal = nVal
         self.countdownArray = []
 
-    def biggestSquare(self,localDenNum):
-        Nnum = copy.deepcopy(localDenNum)
-        for x in range(0,25):
-            if Nnum <= (2**x):
-                highestPower = (x)
-                break
+    def reverseStr(self,stringIn):
+        newReversedStr = ""
+        for i in range(len(stringIn)-1,-1,-1):
+            newReversedStr = newReversedStr + stringIn[i]
+        return(newReversedStr)
+
+
+
+
+    def generate_binary_numbers(self,decToBin):
         
-        Nnum = Nnum-1
-        BinaryNumber.generate_binary_numbers(self,Nnum)
-        return(highestPower)
+        localN = copy.deepcopy(decToBin)
 
-
-    def generate_binary_numbers(self,denNum):
-        localDenNum = copy.deepcopy(denNum)
-        if localDenNum > 0:
-            highestPower = self.biggestSquare(localDenNum)
-            binaryOutput = []
+        if decToBin >= 1:
             
-            workingNumber = copy.deepcopy(localDenNum)
-
-            #print(str(2**highestPower) +" is the biggest square")
-            for i in range((highestPower+0),-1,-1):
-                if (2**i) <= workingNumber:
-                    binaryOutput.insert(0,"1")
-                    workingNumber = workingNumber - (2**i)
+            currentBinaryNum = ""
+            while localN != 0:
+                if (localN % 2) == 1: 
+                    currentBinaryNum = currentBinaryNum + "1"
+                    localN = (localN-1)/2
                 else:
-                    binaryOutput.insert(0,"0")
-                
-            if (localDenNum%2 == 1) & ("".join(binaryOutput) != "1"):
-                self.countdownArray.append("".join(binaryOutput)[:-1] )
-            else:
-                if ("".join(binaryOutput[::-1]))[0] == "0":
-                    self.countdownArray.append(("".join(binaryOutput[::-1]))[1:])
-                else:
-                    self.countdownArray.append("".join(binaryOutput[::-1]))
-            #print(localDenNum)
-            #print("".join(binaryOutput))
-            return((' ,'.join(self.countdownArray))[::-1])
-
+                    currentBinaryNum = currentBinaryNum + "0"
+                    localN = (localN)/2
+            self.countdownArray.append(self.reverseStr(currentBinaryNum))
+            decToBin = decToBin-1
+            print(decToBin)
+            self.generate_binary_numbers(decToBin)
 
 
     def main(self):
-        denNum = copy.deepcopy(self.nVal)
-        print(self.generate_binary_numbers(20))
+        decToBin = copy.deepcopy(self.nVal)
+        self.generate_binary_numbers(decToBin)
+        print("Output final array: "+str(self.countdownArray))
 
 
 
