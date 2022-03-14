@@ -1,63 +1,51 @@
-from ast import Return
-import queue
-outputArray = []
+class BinaryNumber:
+    def __init__(self, number):
+        self.number = number
 
-def generatePrintBinary(n):
- 
-    # Create an empty queue
-    from queue import Queue
-    q = Queue()
- 
-    # Enqueue the first binary number
-    q.put("1")
- 
-    # 0 as left child and 1 as right child and so on
-    while(n > 0):
-        n -= 1
-        # Print the front of queue
-        s1 = q.get()
-        outputArray.append(s1)
+    def generate_binary_numbers(self):
+        queue = []
+        large_string = ""
+        for x in range(self.number, 0, -1):
+            queue.append(x)
+        for N in queue: 
+            L = []
+            if N == 0:
+                L.append(str(0))
+            while(N != 0):
+                temp = N % 2
+                L.append(str(temp))
+                N = N//2
+            L.reverse()
+            string = (''.join(L))
+            if string != "1":
+                large_string += (string + ', ')
+            else:
+                large_string += string
 
- 
-        s2 = s1  # Store s1 before changing it
- 
-        # Append "0" to s1 and enqueue it
-        q.put(s1+"0")
- 
-        # Append "1" to s2 and enqueue it. Note that s2
-        # contains the previous front
-        q.put(s2+"1")
+        return large_string
+    
+    def binaryGapRecursive(n):
+        Gapqueue = [i for i in list(range(32)) if (n >> i) & 1]
+        if len(Gapqueue) < 2:
+            return 0
+        returnOut = max(Gapqueue[i+1] - Gapqueue[i] for i in list(range(len(Gapqueue) - 1)))
+        if returnOut == 1 :
+            returnOut=0
+        return(returnOut)
 
 
+def run():
+    userInput = int(input("Enter number: "))
+    binary = BinaryNumber(userInput)
 
-n = int(input("Enter your value for n"))
-generatePrintBinary(n)
-switchArray = []
-for i in range((len(outputArray)-1),-1,-1):
-    print(i)
-    switchArray.append(outputArray[i])
-print(switchArray)
-class Solution:
-   def binaryGap(self, n):
-      B = bin(n).replace('0b','')
-      K = str(B)
-      K = list(K)
-      Max = 0
-      C = 0
-      S =0
-      Flag =False
-      for i in range(len(K)):
-         if K[i] == '1' and C == 0 and Flag == False:
-            C=i
-            Flag = True
-         elif K[i] == '1' and Flag:
-            S=i
-            if Max<abs(S-C):
-               Max = abs(S-C)
-               C=S
-      return Max
-ob = Solution()
+    print("The binary numbers are " , binary.generate_binary_numbers())
+    print("The binary gap is ",BinaryNumber.binaryGapRecursive(userInput))
+    print()
+    if input("again? (y/n)").lower() == "y":
+        print()
+        print()
+        run()
+    else:
+        pass
 
-M = format(n, "b")
-
-print("The number", n, "(binary representation", M, ", has a gap of ", ob.binaryGap(n))
+run()
