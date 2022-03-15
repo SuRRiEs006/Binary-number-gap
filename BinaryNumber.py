@@ -1,12 +1,13 @@
 #####LIMITS#####
 '''
-
+- HIGHEST N IS 1000 DUE TO MAX RECURSION
 '''
-#####IMPORTS#####
+######IMPORTS####
 from cgitb import reset
 import copy
-
-
+import sys
+# SETTING MAX RECURSION DEPTH TO ALLOW MAX N OF 1000
+sys.setrecursionlimit(1018)
 ##### CODE ######
 
 class BinaryNumber:
@@ -30,7 +31,7 @@ class BinaryNumber:
                     currentBinaryNum ="0"+ currentBinaryNum
                     localN = (localN)/2
             if decToBin+5 > (self.nVal):
-                print(self.nVal-decToBin)
+                #print(self.nVal-decToBin)
                 self.countdownArray[(self.nVal-decToBin)] = currentBinaryNum
             else:
                 self.countdownArray.append(currentBinaryNum)
@@ -45,7 +46,7 @@ class BinaryNumber:
             if self.countdownArray[i] == None:
                 break
             outputString = f"{outputString} {str(self.countdownArray[i])},"
-        outputString = outputString[:-1]
+        outputString = f"{outputString[:-1]}. "
         return(outputString)
 
 
@@ -57,9 +58,9 @@ class BinaryNumber:
                 if self.nValBin[index] == "0":
                     streak = streak+1
                 elif self.nValBin[index] == "1":
-                    #print("wrote "+str(streak))
+
                     if streak >= self.gapValue:
-                        #print("wrote "+str(streak))
+
                         self.gapValue = streak+1
                     streak = 0
                 index = index + 1
@@ -69,7 +70,7 @@ class BinaryNumber:
                     self.gapValue = 0
                 else:
                     self.binaryGap = 1
-                print("NO ONE OR ZERO")
+
 
 
     def main(self):
@@ -83,9 +84,17 @@ class BinaryNumber:
 
 if __name__ == "__main__":
     reRun = True
+    validN = False
     while reRun == True:
-        ClassNVal = int(input("Please input a whole number: "))
+        while validN == False:
+            try:
+                ClassNVal = int(input("Please input a whole number: "))
+                validN = True
+            except:
+                print("ERROR: PLEASE ENSURE THE INPUT IS AN INTEGER AND  ")
+
         BinaryNumber(ClassNVal).main()
+        validN = False
 
         validInput = False
         while validInput == False:
@@ -93,6 +102,7 @@ if __name__ == "__main__":
             if (reRunQ == "y") or (reRunQ == "n"):
                 validInput = True
                 if reRunQ == "n":
+                    print("You are now exiting the program...\nThank you for trying it out!")
                     reRun = False
             else:
                 print("Your input wasn't recognized, please ensure there are no spaces in your input!")
