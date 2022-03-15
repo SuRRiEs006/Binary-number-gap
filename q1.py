@@ -1,18 +1,20 @@
 #####LIMITS#####
 '''
-- MAX NUMBER IS 2**25 WHICH SHOULD BE MORE THAN BETTER
+
 '''
 #####IMPORTS#####
+from cgitb import reset
 import copy
+
 
 ##### CODE ######
 
 class BinaryNumber:
-    def __init__(self):
-        self.nVal = None
+    def __init__(self,nVal):
+        self.nVal = nVal
         self.nValBin = None
         self.countdownArray = []
-        self.gapValue = 0
+        self.gapValue = 1
 
     def reverseStr(self,stringIn):
         newReversedStr = ""
@@ -25,48 +27,66 @@ class BinaryNumber:
         localN = copy.deepcopy(decToBin)
 
         if decToBin >= 1:
-            
             currentBinaryNum = ""
             while localN != 0:
                 if (localN % 2) == 1: 
-                    currentBinaryNum = currentBinaryNum + "1"
+                    currentBinaryNum = "1"+currentBinaryNum
                     localN = (localN-1)/2
                 else:
-                    currentBinaryNum = currentBinaryNum + "0"
+                    currentBinaryNum ="0"+ currentBinaryNum
                     localN = (localN)/2
-            self.countdownArray.append(self.reverseStr(currentBinaryNum))
+            self.countdownArray.append(currentBinaryNum)
             if decToBin == self.nVal:
-                self.nValBin = (self.reverseStr(currentBinaryNum))
+                self.nValBin = (currentBinaryNum)
             decToBin = decToBin-1
             self.generate_binary_numbers(decToBin)
 
 
-
     def binaryGap(self,index,streak):
         
-        if index <= len(self.nValBin)-1:
-            if self.nValBin[index] == "0":
-                streak = streak+1
-            elif self.nValBin[index] == "1":
-                #print("wrote "+str(streak))
-                if streak >= self.gapValue:
+        if (index <= len(self.nValBin)-1):
+            if (self.nValBin.count("1") > 1) & (self.nValBin.find("0") != -1):
+                if self.nValBin[index] == "0":
+                    streak = streak+1
+                elif self.nValBin[index] == "1":
                     #print("wrote "+str(streak))
-                    self.gapValue = streak+1
-                streak = 0
-            index = index + 1
-            self.binaryGap(index,streak)
+                    if streak >= self.gapValue:
+                        #print("wrote "+str(streak))
+                        self.gapValue = streak+1
+                    streak = 0
+                index = index + 1
+                self.binaryGap(index,streak)
+            else:
+                if (self.nValBin.count("1") <= 1):
+                    self.gapValue = 0
+                else:
+                    self.binaryGap = 1
+                print("NO ONE OR ZERO")
 
-            
-      
 
     def main(self):
-        self.nVal = 22
         decToBin = copy.deepcopy(self.nVal)
         self.generate_binary_numbers(decToBin)
-        print("Output final array: "+str(self.nValBin))
+        print(f"Binary numbers between 1 and {self.nVal} are: {', '.join(self.countdownArray)} \n")
         self.binaryGap(0,1)
-        print(self.gapValue)
+        print(f"The binary gap of {self.nVal} is {self.gapValue}.")
+
 
 
 if __name__ == "__main__":
-    BinaryNumber().main()
+    reRun = True
+    while reRun == True:
+        ClassNVal = int(input("Please input a whole number: "))
+        BinaryNumber(ClassNVal).main()
+        print("FINESED"
+        )
+
+        validInput = False
+        while validInput == False:
+            reRunQ = input('''\n\n\n------------------------------------------------- \nDo you want to input another number? (y/n) :''').lower()
+            if (reRunQ == "y") or (reRunQ == "n"):
+                validInput = True
+                if reRunQ == "n":
+                    reRun = False
+            else:
+                print("Your input wasn't recognized, please ensure there are no spaces in your input!")
