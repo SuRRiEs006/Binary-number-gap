@@ -127,7 +127,7 @@ class BinaryNumber:
         self.generate_binary_numbers(decToBin)
         print(f"Binary numbers between 1 and {self.nVal} are: {self.output_binary_numbers_reverse()} \n")
 
-        self.binaryGap(0,1)
+        self.binaryGap(0,0)
         print(f"The binary gap of {self.nVal} is {self.gapValue}.")
 
 # this method holds the menu and triggers BinaryClass when user asks to. Also validates inputs.
