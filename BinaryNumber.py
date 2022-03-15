@@ -23,7 +23,26 @@ class BinaryNumber:
         # countdownArray is the count of binary gap, its updated with higher values if found
         self.gapValue = 1
         # default fill value of countdownArray
-        self.memoryAllocated = 10
+        self.MEMORY_ALLOCATED = 10
+
+    def denaryToBinary(self,localN):
+        # initialize string to add current binary digits to
+        currentBinaryNum = ""
+
+        # while loop ensures that the number keeps geing through the 
+        # halfing cycle till localN is 0 where it can no longer half
+        while localN != 0:
+
+            # if odd number then add 1 to currentBinaryNum and add one to number and half
+            if (localN % 2) == 1: 
+                currentBinaryNum = "1" + currentBinaryNum
+                localN = (localN-1)/2
+
+            # else must be even; then add 0 to currentBinaryNum and half number
+            else:
+                currentBinaryNum ="0"+ currentBinaryNum
+                localN = (localN)/2
+        return(currentBinaryNum)
 
     # a recursive function that calculates each number from N to 1 to binary
     def generate_binary_numbers(self,decToBin): 
@@ -35,26 +54,12 @@ class BinaryNumber:
         # in this situation if calculating the binary to 1 then stop after.
         if decToBin >= 1:
 
-            # initialize string to add current binary digits to
-            currentBinaryNum = ""
-
-            # while loop ensures that the number keeps geing through the 
-            # halfing cycle till localN is 0 where it can no longer half
-            while localN != 0:
-
-                # if odd number then add 1 to currentBinaryNum and add one to number and half
-                if (localN % 2) == 1: 
-                    currentBinaryNum = "1" + currentBinaryNum
-                    localN = (localN-1)/2
-
-                # else must be even; then add 0 to currentBinaryNum and half number
-                else:
-                    currentBinaryNum ="0"+ currentBinaryNum
-                    localN = (localN)/2
+            # calls funtion to convert the current number to binary
+            currentBinaryNum = self.denaryToBinary(localN)
             
             # up to first 10 time the generate_binary_numbers method run
             # it must repalce default values of None on self.countdownArray
-            if decToBin+self.memoryAllocated > (self.nVal):
+            if decToBin+self.MEMORY_ALLOCATED > (self.nVal):
                 #print(self.nVal-decToBin)
                 self.countdownArray[(self.nVal-decToBin)] = currentBinaryNum
 
