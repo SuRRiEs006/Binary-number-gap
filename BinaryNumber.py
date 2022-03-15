@@ -28,6 +28,7 @@ class BinaryNumber:
 
     # a recursive function that calculates each number from N to 1 to binary
     def generate_binary_numbers(self,decToBin): 
+
         # local deep copy of decToBin to work with in current funtion
         localN = copy.deepcopy(decToBin)
 
@@ -44,7 +45,7 @@ class BinaryNumber:
 
                 # if odd number then add 1 to currentBinaryNum and add one to number and half
                 if (localN % 2) == 1: 
-                    currentBinaryNum = "1"+currentBinaryNum
+                    currentBinaryNum = "1" + currentBinaryNum
                     localN = (localN-1)/2
 
                 # else must be even; then add 0 to currentBinaryNum and half number
@@ -102,7 +103,6 @@ class BinaryNumber:
                 # else see if one then see if a new largest gap. If largest then overwrite previous, reset streaks to 0
                 elif self.nValBin[index] == "1":
                     if streak >= self.gapValue:
-
                         self.gapValue = streak+1
                     streak = 0
                 
@@ -116,39 +116,47 @@ class BinaryNumber:
                     self.binaryGap = 1
 
 
-
+    # main method just co-ordinates inputs and outputs and calls other methods to get the output results to user
     def main(self):
         decToBin = copy.deepcopy(self.nVal)
+        
         self.generate_binary_numbers(decToBin)
         print(f"Binary numbers between 1 and {self.nVal} are: {self.output_binary_numbers_reverse()} \n")
+
         self.binaryGap(0,1)
         print(f"The binary gap of {self.nVal} is {self.gapValue}.")
 
 
 
 if __name__ == "__main__":
+    # re-run variable to check if should run script again, validN checks input validity
     reRun = True
     validN = False
+    
+    # keeps looping till valid N is provided by the user
     while reRun == True:
         while validN == False:
             try:
                 ClassNVal = int(input("Please input a whole number: "))
-                if ClassNVal == 0:
+                if (ClassNVal == 0) or ((ClassNVal > 1000)):
                         raise("INPUT IS NOT BE 0")
                 validN = True
             except:
-                print("ERROR PLEASE ENSURE:\n     - THE INPUT IS AN INTEGER \n     - MAX N INPUT IS 1000 \n     - INPUT IS NOT BE 0 \n_________________________________ ")
+                print("ERROR PLEASE ENSURE:\n\n     - THE INPUT IS AN INTEGER \n     - MAX N INPUT IS 1000 \n     - INPUT IS NOT BE 0 \n_________________________________________________ ")
 
+        # runs main function with N input being provided to initialization method, then resets validN for menu
         BinaryNumber(ClassNVal).main()
         validN = False
 
+        # valid input ensures that the while loop runs till a valid input to menu is provided.
         validInput = False
         while validInput == False:
-            reRunQ = input('''\n_________________________________ \nDo you want to input another number? (y/n) :''').lower()
+            reRunQ = input('''\n_________________________________________________ \nDo you want to input another number? (y/n) :''').lower()
+
             if (reRunQ == "y") or (reRunQ == "n"):
                 validInput = True
                 if reRunQ == "n":
-                    print("You are now exiting the program...\nThank you for trying it out!")
+                    print("You are now exiting the program...\nThank you for trying it out!\n_________________________________________________")
                     reRun = False
             else:
-                print("Your input wasn't recognized, please ensure there are no spaces in your input!")
+                print("Your input wasn't recognized, please ensure there are no spaces in your input! ")
