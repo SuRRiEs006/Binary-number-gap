@@ -13,14 +13,8 @@ class BinaryNumber:
     def __init__(self,nVal):
         self.nVal = nVal
         self.nValBin = None
-        self.countdownArray = []
+        self.countdownArray = [None]*5
         self.gapValue = 1
-
-    def reverseStr(self,stringIn):
-        newReversedStr = ""
-        for i in range(len(stringIn)-1,-1,-1):
-            newReversedStr = newReversedStr + stringIn[i]
-        return(newReversedStr)
 
     def generate_binary_numbers(self,decToBin):
         
@@ -35,7 +29,11 @@ class BinaryNumber:
                 else:
                     currentBinaryNum ="0"+ currentBinaryNum
                     localN = (localN)/2
-            self.countdownArray.append(currentBinaryNum)
+            if decToBin+5 > (self.nVal):
+                print(self.nVal-decToBin)
+                self.countdownArray[(self.nVal-decToBin)] = currentBinaryNum
+            else:
+                self.countdownArray.append(currentBinaryNum)
             if decToBin == self.nVal:
                 self.nValBin = (currentBinaryNum)
             decToBin = decToBin-1
@@ -44,6 +42,8 @@ class BinaryNumber:
     def output_binary_numbers_reverse(self):
         outputString = ""
         for i in range(0,len(self.countdownArray)):
+            if self.countdownArray[i] == None:
+                break
             outputString = f"{outputString} {str(self.countdownArray[i])},"
         outputString = outputString[:-1]
         return(outputString)
